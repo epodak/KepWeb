@@ -12,7 +12,7 @@ class Index extends React.Component {
     //console.log("Another rendered..");
     return (
         
-        <div>htf did you get here?</div>
+        <div>Nothing to see here!</div>
 
 
     );
