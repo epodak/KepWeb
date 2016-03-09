@@ -1,7 +1,7 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  color: black;
+  background: white;
 }
 
 .index img {
@@ -18,4 +18,27 @@ body {
   border: 1px solid #000;
   border-width: 1px 0;
   background: #666;
+}
+
+.warning {
+  color:orange;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+.cyan {
+  background: cyan;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.stripe {
+  background: antiquewhite;
 }

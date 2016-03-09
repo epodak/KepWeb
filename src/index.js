@@ -1,15 +1,29 @@
+
+
+import 'babel-polyfill';
 import 'core-js/fn/object/assign';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/Main';
-import $ from 'jquery';
-import $script from 'scriptjs';
-window.jQuery = $;
-require('ms-signalr-client');
+import { render } from 'react-dom';
+import { browserHistory, Router, Route, IndexRoute} from 'react-router';
 
-$script("http://localhost:18939/signalr/hubs", function() {
-  // Render the main component into the dom
-ReactDOM.render(<App />, document.getElementById('app'));
 
-});
-;
+import Title from './components/Title';
+import Error404 from './components/Error404';
+import Explorer from './components/Explorer';
+import Index from './components/Index';
+import Xsl from './components/Xsl';
+
+
+        // Render the main component into the dom
+        render((
+            <Router history={browserHistory}>
+                <Route path="/" component={Title}>
+                    <IndexRoute component={Index}/>
+                    <Route path="explore/*" component={Explorer}/>
+                    <Route path="xsl/:xml/:xsl" component={Xsl}/>
+                    <Route path="*" component={Error404}/>
+                </Route>      
+            </Router>
+        ), document.getElementById('app'));
+
+                    

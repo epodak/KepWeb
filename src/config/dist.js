@@ -3,7 +3,9 @@
 import baseConfig from './base';
 
 let config = {
-  appEnv: 'dist'  // feel free to remove the appEnv property here
+  appEnv: 'dist',
+  signalr: '/signalr',
+  service: '/api/opc'
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));
