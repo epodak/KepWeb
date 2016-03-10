@@ -1,6 +1,6 @@
 # KepWeb
 
-React based web client allowing view of kepware Opc Serrver config and browsing opc items.
+React based web client allowing view of kepware Opc Server config and browsing opc items.
 
 You need to supply a CuttentOpcServerConfiguration.xml file (put it in src)
 
