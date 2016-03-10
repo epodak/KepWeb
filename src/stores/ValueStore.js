@@ -1,5 +1,5 @@
 import alt from '../alt/alt';
-import http from 'browser-http';
+import request from 'browser-request';
 import OpcStream from '../streams/OpcStream';
 import ValueActions from '../actions/ValueActions';
 
@@ -31,7 +31,6 @@ class ValueStore {
   }
   unsubscribeValue(path) {
     //this will test for no subscriptions left and remove..
-    console.log(`values leave: ${path}`);
     let dd = this.state.getIn('values', path, 'data');
     let _this=this;
     let _query = path==='' ? 'objects' : 'variables';
@@ -57,13 +56,13 @@ class ValueStore {
     
     this._lastSubscribe = o.observable.subscribe((stream)=> {
       if(stream.connected) {
-        http.request(`${config.service}/${path}?query=${_query}`, {type: 'GET'},  function(response, error) {
+        request({method:'GET', url:`${config.service}/${path}?query=${_query}`, json:true}, function(error, response) {
           _this.setState(_this.state.setIn(['values', path], new Immutable.Map({
-              data: response ? response.data : [],
+              data: response ? response.body : [],
               error: new Immutable.Map(error),
               values:new Immutable.Map(),
               subscriptions: stream.subscribe(
-                (response ? response.data : [])
+                (response ? response.body : [])
                   .filter(d=>d.ReferenceTypeId==='HasComponent')
                   .map(d=>`${path.replace(/\//g, '.')}.${d.DisplayName}`)
               ).subscribe((s)=> {

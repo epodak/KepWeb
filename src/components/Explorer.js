@@ -86,9 +86,12 @@ class Explorer extends React.Component {
                             <Link to={root + '/' + f.join('/')} >{f[f.length-1]}</Link>
                             .
                             </span>)}
-                        <Link to={'/xsl/CurrentOPCServerConfiguration/document#' + parts.join('.')}>
-                          {linq.from(parts).last()}
-                        </Link>
+                        {linq.from(parts).last()[0] !=='_'
+                            ? <Link to={'/xsl/CurrentOPCServerConfiguration/document#' + parts.join('.')}>
+                              {linq.from(parts).last()} 
+                            </Link>
+                            : linq.from(parts).last()
+                        }
                     </View>
                     <View row />
                 </View>

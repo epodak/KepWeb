@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "alt-utils": "^1.0.0",
-    "browser-http": "^4.0.2",
+    "browser-request": "^0.3.3",
     "core-js": "^2.0.0",
     "font-awesome": "^4.5.0",
     "immutable": "^3.7.6",
