@@ -26,6 +26,18 @@ function* entries(obj) {
    }
 }
 
+function getPath(path){
+    if(!path)
+        return [];
+    else
+        return path instanceof Array ? path : [path]
+}
+
+function getPathString(paths){
+    return `?path=${paths.filter(p=>p).map(p=>`${encodeURI(p).replace(/#/g, '%23')}`).join('&path=')}`;
+    
+}
+
 
 @connectToStores
 class Explorer extends React.Component {
@@ -41,29 +53,23 @@ class Explorer extends React.Component {
   }
   
   componentDidMount() {
-    ValueActions.subscribeValue(this.props.params.splat);
+    ValueActions.subscribeValue(getPathString(getPath(this.props.location.query.path)));
   }
   shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.values !== this.props.values || nextProps.todos !== this.props.todos;
+        return nextProps.values !== this.props.values; // || nextProps.todos !== this.props.todos;
     }
   componentWillReceiveProps (newProps) {
-    if(this.props.params.splat!==newProps.params.splat)
-    {
-        if(this.props.params.splat!=undefined)
-        {
-            ValueActions.unsubscribeValue(this.props.params.splat);
+        if(newProps.location.query!== this.props.location.query){
+            ValueActions.unsubscribeValue(getPathString(getPath(this.props.location.query.path)));
+            ValueActions.subscribeValue(getPathString(getPath(newProps.location.query.path)));
         }
-        ValueActions.subscribeValue(newProps.params.splat);
-    }
-    
   }
-   
   render() {
     //console.log("Another rendered..");
     const root= '/explore';
     const parts = this.props.params.splat.split('/');
-    const splat = this.props.params.splat ?  '/' + this.props.params.splat : "";
-    const dotsplat = this.props.params.splat.replace(/\//g, '.');
+    const paths = getPath(this.props.location.query.path);// instanceof Array ? this.props.location.query.path : [this.props.location.query.path]
+    const pathString = getPathString(paths);
     return (
 
       <div className="index">
@@ -73,7 +79,8 @@ class Explorer extends React.Component {
                     <View row auto >
                     <Link to={root + '/'}><FontAwesome name='home' /></Link>.
                     {
-                        linq.from(parts).take(parts.length-1)
+                        linq.from(paths).take(paths.length-1)
+                        .select(part=>part.replace(/#/g, '%23'))
                         .toArray()
                         .reduce((prev,current,index)=>{
                             if(index===0)
@@ -83,15 +90,16 @@ class Explorer extends React.Component {
                             return prev;
                         },[])
                         .map((f)=><span>
-                            <Link to={root + '/' + f.join('/')} >{f[f.length-1]}</Link>
+                            <Link to={root + '/' + getPathString(f)} >{f[f.length-1]}</Link>
                             .
                             </span>)}
-                        {linq.from(parts).last()[0] !=='_'
-                            ? <Link to={'/xsl/CurrentOPCServerConfiguration/document#' + parts.join('.')}>
-                              {linq.from(parts).last()} 
-                            </Link>
-                            : linq.from(parts).last()
-                        }
+                        {linq.from(paths).any() 
+                            ? (linq.from(paths).last()[0] !=='_'
+                                ? <Link to={'/xsl/CurrentOPCServerConfiguration/document#' + parts.join('.')}>
+                                    {linq.from(paths).last()} 
+                                </Link>
+                                : linq.from(paths).last())
+                            : undefined}
                     </View>
                     <View row />
                 </View>
@@ -99,13 +107,13 @@ class Explorer extends React.Component {
             <View row >
                 <View row width="60px"/>    
                 {this.props.values.getIn(['websocketStatus']).connected
-                    ? (this.props.values.getIn(['values', this.props.params.splat]) 
+                    ? (this.props.values.getIn(['values', pathString]) 
 
                         ? <View column>
-                            <Error error={this.props.values.getIn(['values', this.props.params.splat, 'error', 'response'])}/>
-                            {this.props.values.getIn(['values', this.props.params.splat, 'data']).map((item, index) => {
+                            <Error error={this.props.values.getIn(['values', pathString, 'error', 'response'])}/>
+                            {this.props.values.getIn(['values', pathString, 'data']).map((item, index) => {
                                     return (
-                                            <Item root='/explore' index={index} key={item.DisplayName} splat = {this.props.params.splat} item={item} value={this.props.values.getIn(['values', this.props.params.splat, 'values', dotsplat + '.' + item.DisplayName])}/>
+                                        <Item root='/explore' index={index} key={item.DisplayName} pathString={pathString} path={paths}  item={item} value={this.props.values.getIn(['values', pathString, 'values', item.NodeId.ExpandedText])}/>
                                     );
                                     })}
                             

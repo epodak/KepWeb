@@ -18,7 +18,7 @@ class Index extends React.Component {
             <li><Link to = '/xsl/CurrentOPCServerConfiguration/full-document'>Full Document</Link></li>
         </ul>
 
-This project is a combination of <a href="https://github.com/gilesbradshaw/KepWeb">this</a> and  <a href="https://github.com/gilesbradshaw/KepView">this</a>
+<a href="https://github.com/gilesbradshaw/KepWeb">source</a>
             
             
             
