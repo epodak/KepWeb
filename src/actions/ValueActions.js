@@ -6,7 +6,7 @@ class ValueActions {
   }
  unsubscribeValue(path) {
     return path;
-  } 
+  }
 }
  
 export default alt.createActions(ValueActions);

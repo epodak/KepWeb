@@ -3,10 +3,10 @@ require('styles/App.css');
 
 import React from 'react';
 import { Link } from 'react-router'
-import FontAwesome  from 'react-fontawesome';
 
-
-import View, {FlexColumn, FlexRow} from '../lib/Flex.js';
+import ItemIcon from './ItemIcon';
+import View from '../lib/Flex.js';
+import Value from './Value';
 
 
 
@@ -21,45 +21,19 @@ class Item extends React.Component {
     const paths= `${this.props.pathString}&path=${encodeURI(browseName).replace(/#/g, '%23')}`;
 
     return (
-
       <View className={this.props.index %2 ? 'stripe': '' } row  auto key={this.props.item.DisplayName}>
         <View column width="400px">
             <div title = {JSON.stringify(this.props.item)}>
                 <Link  to={this.props.root + '/' + paths} >
-                    <span title={this.props.item.NodeClass}>
-                        {{
-                            None: <FontAwesome name="genderless"/>,
-                            Variable: <FontAwesome name="question"/>,
-                            Object: <FontAwesome name="cube"/>,
-                            Method: <FontAwesome name="cogs"/>,
-                            ObjectType: <FontAwesome name="cubes"/>,
-                            VariableType: <FontAwesome name="question-circle"/>,
-                            ReferenceType: <FontAwesome name="hand-pointer"/>,
-                            DataType: <FontAwesome name="database"/>,
-                            View: <FontAwesome name="eye"/>,
-                            All: <FontAwesome name="globe"/>
-                        }[this.props.item.NodeClass]}
-                    </span>
+                    <ItemIcon nodeClass= {this.props.item.NodeClass}/>
                     {decodeURI(browseName)}
                 </Link>
-                
-            </div>    
+            </div>
         </View>
         <View column>
-            {this.props.value
-                ?  (this.props.value.Succeeded 
-                    ? (
-                        this.props.value.Value instanceof Array
-                        ? this.props.value.Value.map(v=>v instanceof Object ? JSON.stringify(v): v)
-                        : this.props.value.DisplayValue
-                        )
-                    : <FontAwesome title = {this.props.value.Exception}  name='warning' className="warning" />)
-                : undefined
-            }
+            <Value value={this.props.value}/>
         </View>
-        
      </View>
-
     );
   }
 }

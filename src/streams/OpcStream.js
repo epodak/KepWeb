@@ -6,8 +6,6 @@ window.jQuery = $;
 
 require('ms-signalr-client');
 
-
-
 class OpcStream {
     constructor() {
         this.observable = new Rx.ReplaySubject(1);
@@ -19,12 +17,10 @@ class OpcStream {
             //$.connection.hub.start();
             const chat = $.connection.opcHub;
             const subscribe = (subscriptions) => {
-                console.log(`subscribing ${subscriptions}`);
                 chat.server.subscribe(subscriptions);
                 return messagePublished;
             }
             const unsubscribe = (subscriptions) => {
-                console.log(`removing ${subscriptions}`);
                 chat.server.remove('tags', subscriptions);
                 return messagePublished;
             }

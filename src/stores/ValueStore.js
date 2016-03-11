@@ -37,9 +37,11 @@ class ValueStore {
       this._lastUnsubscribe.dispose();
     this._lastUnsubscribe =  o.observable.where(stream=>stream.connected).subscribe((stream)=> {
       stream.unsubscribe(
-              _this.state.getIn(['values', pathString, 'data'])
-                .filter(d=>d.NodeClass==='Variable')
+              _this.state.getIn(['values', pathString, 'children'])
+                .concat(_this.state.getIn(['values', pathString, 'path']).length ? [_this.state.getIn(['values', pathString, 'path'])[_this.state.getIn(['values', pathString, 'path']).length-1].node]: undefined)
+                .filter(d=>d && d.NodeClass==='Variable')
                 .map(d=>d.NodeId.ExpandedText)
+                
             );
       _this.state.getIn(['values', pathString, 'subscriptions']).dispose();
       _this.setState(_this.state.deleteIn(['values'], pathString));
@@ -55,15 +57,20 @@ class ValueStore {
     
     this._lastSubscribe = o.observable.subscribe((stream)=> {
       if(stream.connected) {
-        request({method:'GET', url:`${config.service}/${pathString}`, json:true}, function(error, response) {
-          _this.setState(_this.state.setIn(['values', pathString], new Immutable.Map({
-              data: response ? response.body : [],
+          request({method:'GET', url:`${config.service}/${pathString}`, json:true}, function(error, response) {
+            const children = response && response.body && response.body.children ? response.body.children : [];
+            const path = response && response.body && response.body.path ? response.body.path : [];
+            _this.setState(_this.state.setIn(['values', pathString], new Immutable.Map({
+              children: children,
+              path:path,
               error: new Immutable.Map(error),
               values:new Immutable.Map(),
               subscriptions: stream.subscribe(
-                (response ? response.body : [])
-                  .filter(d=>d.NodeClass==='Variable')
+                children
+                  .concat(path.length ? [path[path.length-1].node] : undefined)
+                  .filter(d=>d && d.NodeClass==='Variable')
                   .map(d=>d.NodeId.ExpandedText)
+                  
               ).subscribe((s)=> {
 
                   _this.setState(_this.state.setIn(['values', pathString,'values', s.message.Node],s.message));
@@ -72,8 +79,10 @@ class ValueStore {
         
         });
       }
-        else 
+        else
+        {
           _this.setState(_this.state.deleteIn(['values', pathString]));
+        }
 
     });
   }

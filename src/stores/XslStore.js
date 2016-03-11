@@ -1,11 +1,8 @@
 import alt from '../alt/alt';
-import http from 'browser-http';
 import XslActions from '../actions/XslActions';
 
 import immutable from 'alt-utils/lib/ImmutableUtil';
-import Immutable from 'immutable';
 
-import config from 'config';
 
 import $ from 'jquery';
 window.jQuery = $;
@@ -21,7 +18,7 @@ class XslStore {
       fetchXsl: XslActions.fetchXsl
     });
 
-  this.state = "";
+  this.state = '';
   }
   fetchXsl(def) {
     const _this=this;
@@ -39,8 +36,6 @@ class XslStore {
         },0)
           
       }
-      
-
     });
     
   }

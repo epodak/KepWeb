@@ -42,3 +42,9 @@ body {
 .stripe {
   background: antiquewhite;
 }
+.divider {
+  font-weight:  bold;
+  padding-right:  5px;
+  padding-left:  5px;
+  color:  cyan;
+}

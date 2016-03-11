@@ -13,17 +13,16 @@ import Explorer from './components/Explorer';
 import Index from './components/Index';
 import Xsl from './components/Xsl';
 
-
-        // Render the main component into the dom
-        render((
-            <Router history={browserHistory}>
-                <Route path="/" component={Title}>
-                    <IndexRoute component={Index}/>
-                    <Route path="explore/**" component={Explorer}/>
-                    <Route path="xsl/:xml/:xsl" component={Xsl}/>
-                    <Route path="*" component={Error404}/>
-                </Route>      
-            </Router>
-        ), document.getElementById('app'));
+// Render the main component into the dom
+render((
+    <Router history={browserHistory}>
+        <Route path="/" component={Title}>
+            <IndexRoute component={Index}/>
+            <Route path="explore/**" component={Explorer}/>
+            <Route path="xsl/:xml/:xsl" component={Xsl}/>
+            <Route path="*" component={Error404}/>
+        </Route>
+    </Router>
+), document.getElementById('app'));
 
                     
