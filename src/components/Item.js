@@ -26,7 +26,7 @@ class Item extends React.Component {
             <div title = {JSON.stringify(this.props.item)}>
                 <Link  to={this.props.root + '/' + paths} >
                     <ItemIcon nodeClass= {this.props.item.NodeClass}/>
-                    {decodeURI(browseName)}
+                    <span>{decodeURI(browseName)}</span>
                 </Link>
             </div>
         </View>

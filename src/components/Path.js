@@ -44,7 +44,7 @@ class Path extends React.Component {
                     { f[f.length-1].node
                         ? <Link to={root + '/' + getPathString(f.map(f=>f.browseName.replace(/#/g, '%23')))} >
                             <ItemIcon nodeClass={f[f.length-1].node.NodeClass}/>
-                            {f[f.length-1].browseName}
+                            <span>{f[f.length-1].browseName}</span>
                         </Link>
                         : f.browseName
                     }
@@ -54,7 +54,7 @@ class Path extends React.Component {
                     ? (linq.from(retPaths).last().browseName[0] !=='_' && linq.from(retPaths).last().node
                         ? <Link to={'/xsl/CurrentOPCServerConfiguration/document#' + retPaths.map(p=>p.browseName).join('.')}>
                             <ItemIcon nodeClass={linq.from(retPaths).last().node.NodeClass}/>
-                            {linq.from(retPaths).last().browseName}
+                            <span>{linq.from(retPaths).last().browseName}</span>
                         </Link>
                         : linq.from(retPaths).last().browseName)
                     : undefined}
