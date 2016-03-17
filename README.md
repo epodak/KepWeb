@@ -1,8 +1,9 @@
 # KepWeb
 
-React based web client allowing view of kepware Opc Server config and browsing opc items.
+React based web client for opcua
 
-You need to supply a CuttentOpcServerConfiguration.xml file (put it in src)
+![broken](https://github.com/gilesbradshaw/KepWeb/blob/master/opc.PNG?raw=true "Screen dump")
+
 
 This is a client for.. https://github.com/gilesbradshaw/KepView
 
@@ -11,3 +12,4 @@ do
     npm run dist
 
 and then copy from dist folder to published folder from kepview
+
