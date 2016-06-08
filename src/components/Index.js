@@ -13,7 +13,7 @@ class Index extends React.Component {
         
         <div className='index'>
         <ul>
-            <li><Link to = '/explore/'>Explore</Link></li>
+            {/*<li><Link to = '/explore/'>Explore</Link></li> */}
             <li><Link to = '/xsl/CurrentOPCServerConfiguration/document'>Document</Link></li>
             <li><Link to = '/xsl/CurrentOPCServerConfiguration/full-document'>Full Document</Link></li>
         </ul>
