@@ -18,7 +18,7 @@ render((
     <Router history={browserHistory}>
         <Route path="/" component={Title}>
             <IndexRoute component={Index}/>
-            <Route path="explore/**" component={Explorer}/>
+            { /*<Route path="explore/**" component={Explorer}/>*/ }
             <Route path="xsl/:xml/:xsl" component={Xsl}/>
             <Route path="*" component={Error404}/>
         </Route>

@@ -49,13 +49,13 @@ exclude-result-prefixes="xsl servermain">
       </xsl:if>
     </xsl:variable>
 		<div>
-			<a>
+			<!--<a>
 				<xsl:attribute name="href" >
 					<xsl:value-of select="concat('#' ,$my-tag-name, servermain:Name/text())"/>
-				</xsl:attribute>
+				</xsl:attribute> -->
 				<xsl:value-of select = "local-name()"/>:
 				<xsl:value-of select = "servermain:Name/text()"/>
-			</a>
+			<!--</a>-->
 		</div>
 		<div class="contents-indent">
 			<xsl:if test='name()="servermain:Channel"'>
@@ -98,7 +98,7 @@ exclude-result-prefixes="xsl servermain">
               <xsl:value-of select='concat($tag-name,".")'/>
             </xsl:if>
           </xsl:variable>
-          <a >
+          <!--<a >
             <xsl:attribute name='href'>
               <xsl:call-template name="replace">
                 <xsl:with-param name="text" select="concat('/explore.', $my-tag-name, servermain:Name/text())" />
@@ -107,7 +107,7 @@ exclude-result-prefixes="xsl servermain">
                 
                 <xsl:with-param name="by" select="'/'" />
               </xsl:call-template>
-            </xsl:attribute>
+            </xsl:attribute> -->
             <div class="title">
               <xsl:attribute name="id" >
                 <xsl:value-of select="concat($my-tag-name, servermain:Name/text())"/>
@@ -124,7 +124,7 @@ exclude-result-prefixes="xsl servermain">
                 <xsl:value-of select = "servermain:Name"/>  
               </xsl:if>
             </div>
-          </a>
+          <!--</a>-->
     
           
           <div class="indent">
@@ -166,12 +166,12 @@ exclude-result-prefixes="xsl servermain">
           <div class="title">Tags</div>
           <div class="indent">
             <div class="row header">
-              <div class="col-xs-12 col-sm-4 col-md-3">
+              <div class="col-xs-12 col-sm-4 col-md-2">
                 <div class="box">
                   Name
                 </div>
               </div>
-              <div class="col-xs-12 col-sm-3 col-md-2">
+              <div class="col-xs-12 col-sm-3 col-md-3">
                 <div class="box">
                   Address
                 </div>
@@ -212,12 +212,12 @@ exclude-result-prefixes="xsl servermain">
     <div class="if-not-xs">
       
       <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-3">
+        <div class="col-xs-12 col-sm-4 col-md-2">
           <div class="box break">
             <xsl:value-of select="servermain:Name"/>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-3">
           <div class="box">
             <xsl:value-of select="servermain:Address"/>
           </div>
